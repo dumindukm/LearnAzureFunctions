@@ -1,0 +1,82 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="row">
+    <form>
+        <div class="form-group">
+            <label>Caption</label>
+            <input type="text" class="form-control" id="txtCaption" />
+
+        </div>
+
+        <div class="form-group">
+            <label>Image</label>
+            <input class="form-control-file" type="file" id="fileImage" />
+        </div>
+        <button class="btn btn-primary" type="button" id="btnSubmit">Submit</button>
+    </form>
+        
+
+</div>
+
+@section    Scripts
+{
+    <script type="text/javascript">
+
+    $('#btnSubmit').click(function (e) {
+
+        //var data = {}
+
+        //data.Caption = $('#txtCaption').val();
+        //debugger;
+        ////var data = new FormData();//$('#fileImage')[0]
+        ////data.append('Caption', 'df'); // modify
+
+        //// ajax POST
+        //$.ajax({
+        //    url: '/album/Upload',
+        //    method: "POST",
+        //    data: JSON.stringify( data),
+        //    processData: false,
+        //    contentType: 'application/json',
+        //    success: handleResponse,
+        //    error: handleResponse,
+        //    //complete: function (jqXHR, status) {
+        //    //    console.log(jqXHR);
+        //    //    console.log(status);
+        //    //    $f.trigger('reset');
+        //    //}
+        //});
+        //e.preventDefault();
+        console.log('d')
+        e.preventDefault();
+
+            var formData = new FormData();
+            var fileInput = $('#fileImage')[0].files[0];
+
+            formData.append("Caption", $('#txtCaption').val());
+            formData.append("Image", fileInput);
+
+            $.ajax({
+                method: "post",
+                url: '/album/Upload',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+
+
+    });
+
+    function handleResponse(res) {
+        alert(res)
+        return false;
+    }
+    </script>
+}

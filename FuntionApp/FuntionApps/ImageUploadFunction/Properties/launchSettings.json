@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ImageUploadFunction": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --port 8005"
+    }
+  }
+}

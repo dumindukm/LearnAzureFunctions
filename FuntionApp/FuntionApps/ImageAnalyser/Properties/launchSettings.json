@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ImageAnalyser": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --port 8004"
+    }
+  }
+}
