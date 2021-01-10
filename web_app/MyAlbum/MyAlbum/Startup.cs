@@ -1,3 +1,4 @@
+using AppCore.Config;
 using AppCore.services.concrete;
 using AppCore.services.interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -36,6 +37,8 @@ namespace MyAlbum
 
             //services.AddTransient<IImageUploadService, ImageUploadFaaS>();
             services.AddHttpClient<IImageUploadService, ImageUploadFaaS>();
+            services.AddSingleton<CoreConfig>();
+            services.Configure<CoreConfig>(Configuration.GetSection("CoreConfig"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

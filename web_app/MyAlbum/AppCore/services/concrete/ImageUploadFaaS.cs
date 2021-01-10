@@ -1,5 +1,7 @@
-﻿using AppCore.Entities;
+﻿using AppCore.Config;
+using AppCore.Entities;
 using AppCore.services.interfaces;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,9 +14,11 @@ namespace AppCore.services.concrete
     public class ImageUploadFaaS : IImageUploadService
     {
         private HttpClient httpClient;
-        public ImageUploadFaaS(HttpClient httpClient)
+        private CoreConfig config;
+        public ImageUploadFaaS(HttpClient httpClient, IOptionsMonitor<CoreConfig> config)
         {
             this.httpClient = httpClient;
+            this.config = config.CurrentValue;
         }
 
         public async Task<string> UploadImage(ImageDetails imageDetails)
@@ -29,7 +33,7 @@ namespace AppCore.services.concrete
             form.Add(new StreamContent(imageDetails.Image), "Image", imageDetails.ImageName);
 
             // TODO : Get URL from Environment URL
-            var result = await httpClient.PostAsync("http://localhost:8005/api/ImageUploader", form);
+            var result = await httpClient.PostAsync(config.ImageUploaderFunctionURL, form);
             string resultContent = await result.Content.ReadAsStringAsync();
             return resultContent;
         }
